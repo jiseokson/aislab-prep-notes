@@ -43,6 +43,45 @@ class VGGBNBlock(nn.Module):
     return self.block(x)
 ```
 
+최종적으로 아래와 같은 구조의 모델을 설계하여 CIFAR-10 분류에서 정확도 80% 이상을 달성했다.
+Gradient Vanishing 문제에 대응하기 위해 Batch Normalization이 적용된 블록(VGGBNBlock)을 도입했다.
+
+```python
+class TinyVGGCIFAR10_v4(nn.Module):
+  def __init__(self):
+    super().__init__()
+
+    self.features = nn.Sequential(
+        VGGBNBlock(3, 16, n_convs=2),
+        VGGBNBlock(16, 32, n_convs=2),
+        VGGBNBlock(32, 64, n_convs=2),
+        VGGBNBlock(64, 128, n_convs=2),
+        VGGBNBlock(128, 256, n_convs=2),
+    )
+
+    self.classifier = nn.Sequential(
+        nn.Flatten(),
+        nn.Linear(256, 256),
+        nn.ReLU(inplace=True),
+        nn.Dropout(p=0.5),
+        nn.Linear(256, 256),
+        nn.ReLU(inplace=True),
+        nn.Dropout(p=0.5),
+        nn.Linear(256, 10),
+    )
+
+  def forward(self, x):
+    out = self.features(x)
+    out = self.classifier(out)
+    return out
+```
+
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/9ed64963-c86c-4e6b-b02b-243771fe21bc" width="60%">
+  <p>Fig.1 - TinyVGGCIFAR10의 Random sample 예측</p>
+</div>
+
+
 ## Reflections
 모델을 설계하고 실험해나가는 과정에서 각 증상과 상황을 분석하고 이에 대응하는 실습을 직접 경험해봤다.
 그동안 막연히 여겼던 작업들을 실제로 해보며 이전에 배웠던 개념들을 구체적인 상황에 적용해볼 수 있어 의미가 있었다.
