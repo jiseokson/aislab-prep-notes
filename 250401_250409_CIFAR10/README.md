@@ -2,6 +2,15 @@
 CIFAR-10 데이터셋을 대상으로 정확도 80% 이상을 달성하는 분류 모델을 설계하고 학습했다.
 VGG 구조를 참고해 작은 크기의 이미지에 적합하도록 모델의 깊이와 파라미터 수를 조정하여 경량화된 구조로 구성했다.
 
+- **PyTorch_Doc_Quickstart_250403.ipynb**\
+  [PyTorch Doc Quickstart](https://pytorch.org/tutorials/beginner/basics/quickstart_tutorial.html)를 보고 따라한 노트북
+- **TinyVGGCIFAR10_230401.ipynb**\
+  CIFAR-10을 정확도 80% 이상으로 분류하는 모델 작성 - 1 (‼️실패)
+- **TinyVGGCIFAR10_230403.ipynb**\
+  CIFAR-10을 정확도 80% 이상으로 분류하는 모델 작성 - 2 (✅성공)
+- **TinyVGGCIFAR10_v4_chk0.pth**\
+  검증 데이터셋 정확도 80% 달성한 모델 파라미터
+
 ## What I Learned
 모델 설계와 실험 과정에서 측정 지표(Loss, Accuracy 등)를 기반으로 학습 상태를 분석하고 이에 맞게 대응하는 실습을 진행했다.
 오버피팅과 언더피팅 패턴을 파악하는 법을 익혔고 훈련/검증 데이터셋의 Loss 및 Accuracy 변화를 근거로 모델의 상태를 판단하는 방법을 배웠다.
