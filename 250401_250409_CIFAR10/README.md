@@ -52,22 +52,22 @@ class TinyVGGCIFAR10_v4(nn.Module):
     super().__init__()
 
     self.features = nn.Sequential(
-        VGGBNBlock(3, 16, n_convs=2),
-        VGGBNBlock(16, 32, n_convs=2),
-        VGGBNBlock(32, 64, n_convs=2),
-        VGGBNBlock(64, 128, n_convs=2),
-        VGGBNBlock(128, 256, n_convs=2),
+      VGGBNBlock(3, 16, n_convs=2),
+      VGGBNBlock(16, 32, n_convs=2),
+      VGGBNBlock(32, 64, n_convs=2),
+      VGGBNBlock(64, 128, n_convs=2),
+      VGGBNBlock(128, 256, n_convs=2),
     )
 
     self.classifier = nn.Sequential(
-        nn.Flatten(),
-        nn.Linear(256, 256),
-        nn.ReLU(inplace=True),
-        nn.Dropout(p=0.5),
-        nn.Linear(256, 256),
-        nn.ReLU(inplace=True),
-        nn.Dropout(p=0.5),
-        nn.Linear(256, 10),
+      nn.Flatten(),
+      nn.Linear(256, 256),
+      nn.ReLU(inplace=True),
+      nn.Dropout(p=0.5),
+      nn.Linear(256, 256),
+      nn.ReLU(inplace=True),
+      nn.Dropout(p=0.5),
+      nn.Linear(256, 10),
     )
 
   def forward(self, x):
