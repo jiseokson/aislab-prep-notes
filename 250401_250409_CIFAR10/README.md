@@ -1,4 +1,9 @@
 ## Overview
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/9ed64963-c86c-4e6b-b02b-243771fe21bc" width="50%">
+  <p>Fig.1 - TinyVGGCIFAR10의 Random sample 예측</p>
+</div>
+
 CIFAR-10 데이터셋을 대상으로 정확도 80% 이상을 달성하는 분류 모델을 설계하고 학습했다.
 VGG 구조를 참고해 작은 크기의 이미지에 적합하도록 모델의 깊이와 파라미터 수를 조정하여 경량화된 구조로 구성했다.
 
@@ -84,12 +89,6 @@ class TinyVGGCIFAR10_v4(nn.Module):
     out = self.classifier(out)
     return out
 ```
-
-<div align="center">
-  <img src="https://github.com/user-attachments/assets/9ed64963-c86c-4e6b-b02b-243771fe21bc" width="60%">
-  <p>Fig.1 - TinyVGGCIFAR10의 Random sample 예측</p>
-</div>
-
 
 ## Reflections
 모델을 설계하고 실험해나가는 과정에서 각 증상과 상황을 분석하고 이에 대응하는 실습을 직접 경험해봤다.
