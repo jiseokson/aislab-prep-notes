@@ -13,79 +13,79 @@ ImageNet에서 CIFAR-10으로 데이터셋이 변경되며 입력 이미지의 �
 본 실험에서는 이러한 분석을 바탕으로 논문에 제시된 VGG 구조에서 Convolution 레이어의 채널 수를 1/8로 축소한 모델을 이용했다.
 
 <div align="center">
-  <table border="1" cellspacing="0" cellpadding="5" style="text-align:center;">
+  <table border="1" cellspacing="0" cellpadding="5">
     <caption><b>Table.1 - TinyVGG configuration</b></caption>
     <thead>
       <tr>
-        <th>A</th>
-        <th>B</th>
-        <th>C</th>
-        <th>D</th>
-        <th>E</th>
+        <th align="center">A</th>
+        <th align="center">B</th>
+        <th align="center">C</th>
+        <th align="center">D</th>
+        <th align="center">E</th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <td>conv3-8</td>
-        <td>conv3-8<br>conv3-8</td>
-        <td>conv3-8<br>conv3-8</td>
-        <td>conv3-8<br>conv3-8</td>
-        <td>conv3-8<br>conv3-8</td>
+        <td align="center">conv3-8</td>
+        <td align="center">conv3-8<br>conv3-8</td>
+        <td align="center">conv3-8<br>conv3-8</td>
+        <td align="center">conv3-8<br>conv3-8</td>
+        <td align="center">conv3-8<br>conv3-8</td>
       </tr>
       <tr>
-        <td colspan="5">maxpool2</td>
+        <td align="center" colspan="5">maxpool2</td>
       </tr>
       <tr>
-        <td>conv3-16</td>
-        <td>conv3-16<br>conv3-16</td>
-        <td>conv3-16<br>conv3-16</td>
-        <td>conv3-16<br>conv3-16</td>
-        <td>conv3-16<br>conv3-16</td>
+        <td align="center">conv3-16</td>
+        <td align="center">conv3-16<br>conv3-16</td>
+        <td align="center">conv3-16<br>conv3-16</td>
+        <td align="center">conv3-16<br>conv3-16</td>
+        <td align="center">conv3-16<br>conv3-16</td>
       </tr>
       <tr>
-        <td colspan="5">maxpool2</td>
+        <td align="center" colspan="5">maxpool2</td>
       </tr>
       <tr>
-        <td>conv3-32<br>conv3-32</td>
-        <td>conv3-32<br>conv3-32</td>
-        <td>conv3-32<br>conv3-32<br>conv1-32</td>
-        <td>conv3-32<br>conv3-32<br>conv3-32</td>
-        <td>conv3-32<br>conv3-32<br>conv3-32<br>conv3-32</td>
+        <td align="center">conv3-32<br>conv3-32</td>
+        <td align="center">conv3-32<br>conv3-32</td>
+        <td align="center">conv3-32<br>conv3-32<br>conv1-32</td>
+        <td align="center">conv3-32<br>conv3-32<br>conv3-32</td>
+        <td align="center">conv3-32<br>conv3-32<br>conv3-32<br>conv3-32</td>
       </tr>
       <tr>
-        <td colspan="5">maxpool2</td>
+        <td align="center" colspan="5">maxpool2</td>
       </tr>
       <tr>
-        <td>conv3-64<br>conv3-64</td>
-        <td>conv3-64<br>conv3-64</td>
-        <td>conv3-64<br>conv3-64<br>conv1-64</td>
-        <td>conv3-64<br>conv3-64<br>conv3-64</td>
-        <td>conv3-64<br>conv3-64<br>conv3-64<br>conv3-64</td>
+        <td align="center">conv3-64<br>conv3-64</td>
+        <td align="center">conv3-64<br>conv3-64</td>
+        <td align="center">conv3-64<br>conv3-64<br>conv1-64</td>
+        <td align="center">conv3-64<br>conv3-64<br>conv3-64</td>
+        <td align="center">conv3-64<br>conv3-64<br>conv3-64<br>conv3-64</td>
       </tr>
       <tr>
-        <td colspan="5">maxpool2</td>
+        <td align="center" colspan="5">maxpool2</td>
       </tr>
       <tr>
-        <td>conv3-64<br>conv3-64</td>
-        <td>conv3-64<br>conv3-64</td>
-        <td>conv3-64<br>conv3-64<br>conv1-64</td>
-        <td>conv3-64<br>conv3-64<br>conv3-64</td>
-        <td>conv3-64<br>conv3-64<br>conv3-64<br>conv3-64</td>
+        <td align="center">conv3-64<br>conv3-64</td>
+        <td align="center">conv3-64<br>conv3-64</td>
+        <td align="center">conv3-64<br>conv3-64<br>conv1-64</td>
+        <td align="center">conv3-64<br>conv3-64<br>conv3-64</td>
+        <td align="center">conv3-64<br>conv3-64<br>conv3-64<br>conv3-64</td>
       </tr>
       <tr>
-        <td colspan="5">maxpool2</td>
+        <td align="center" colspan="5">maxpool2</td>
       </tr>
       <tr>
-        <td colspan="5">FC-64</td>
+        <td align="center" colspan="5">FC-64</td>
       </tr>
       <tr>
-        <td colspan="5">FC-64</td>
+        <td align="center" colspan="5">FC-64</td>
       </tr>
       <tr>
-        <td colspan="5">FC-10</td>
+        <td align="center" colspan="5">FC-10</td>
       </tr>
       <tr>
-        <td colspan="5">soft-max</td>
+        <td align="center" colspan="5">soft-max</td>
       </tr>
     </tbody>
   </table>
