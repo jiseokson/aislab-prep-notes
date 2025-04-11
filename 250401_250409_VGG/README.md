@@ -36,3 +36,29 @@ ImageNet에서 CIFAR-10으로 데이터셋이 변경되며 입력 이미지의 �
 
 논문에서는 평가 지표로 Top-1, Top-5 Error를 사용했지만, 데이터셋이 CIFAR-10으로 변경됨에 따라 클래스의 수가 10개로 줄어 지표를 그대로 적용하기 어려웠다.
 따라서 본 실험에서는 Accuracy만을 모델 성능 평가 지표로 이용했다.
+
+## Results
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/07631516-a397-43f2-8ff8-756a3d15a6c3" width="70%">
+  <p>Fig.1 - TinyVGG A, Fix-Scale(s=36) Training Log</p>
+</div>
+
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/192c35d1-01f0-4f7f-bab6-c202b1355df6" width="70%">
+  <p>Fig.2 - TinyVGG B, Fix-Scale(s=36) Training Log</p>
+</div>
+
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/587bd06b-5836-4dbe-8f65-6f633596b03c" width="70%">
+  <p>Fig.3 - TinyVGG C, Fix-Scale(s=36) Training Log</p>
+</div>
+
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/8c585d13-1221-4d2e-baa5-dd03c14b195d" width="70%">
+  <p>Fig.4 - TinyVGG D, Multi-Scale(s=[36, 44]) Training Log</p>
+</div>
+
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/35580787-8ace-4d78-8cad-7edda5c4c3b5" width="70%">
+  <p>Fig.5 - TinyVGG E, Multi-Scale(s=[36, 44]) Training Log</p>
+</div>
