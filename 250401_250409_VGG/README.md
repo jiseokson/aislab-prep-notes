@@ -116,7 +116,81 @@ ImageNet에서 CIFAR-10으로 데이터셋이 변경되며 입력 이미지의 �
 논문에서는 평가 지표로 Top-1, Top-5 Error를 사용했지만, 데이터셋이 CIFAR-10으로 변경됨에 따라 클래스의 수가 10개로 줄어 지표를 그대로 적용하기 어려웠다.
 따라서 본 실험에서는 Accuracy만을 모델 성능 평가 지표로 이용했다.
 
+## Code Overview
+
+### `PairedFlipDataset` and `MultiTransformDataset`
+논문에서 제시된 다양한 증강 기법(Augmentation)과 평가 기법을 적용하기 위해 커스텀 데이터셋을 정의하여 활용하였다.
+
+`PairedFlipDataset`은 기본 데이터셋으로부터 원본 이미지와 그 수평 반전 이미지를 함께 반환하는 구조로,
+각 이미지에 대해 Softmax 출력을 계산한 후 평균을 내는 Testing 방식에 사용된다.
+```python
+class PairedFlipDataset(Dataset):
+  def __init__(self, base_dataset):
+    self.base_dataset = base_dataset
+    
+  def __len__(self):
+    return len(self.base_dataset)
+  
+  def __getitem__(self, idx):
+    img, label = self.base_dataset[idx]
+    
+    img_flipped = T.hflip(img)
+    
+    return img, img_flipped, label
+```
+
+`MultiTransformDataset`은 하나의 샘플에 여러 Transform을 동시에 적용한 결과를 반환하도록 설계되었으며,
+이는 Multi-Scale Evaluation을 구현하기 위한 용도로 활용된다.
+```python
+class MultiTransformDataset(Dataset):
+  def __init__(self, base_dataset, trans):
+    self.base_dataset = base_dataset
+    self.trans = trans
+    
+  def __len__(self):
+    return len(self.base_dataset)
+  
+  def __getitem__(self, idx):
+    *imgs, label = self.base_dataset[idx]
+    
+    imgs = [tran(img) for img in imgs for tran in self.trans]
+    
+    return *imgs, label
+```
+
+
+### `Trainer`
+모델 학습에 필요한 손실 함수(Loss), 옵티마이저(Optimizer), 모델 정의, 로그 관리 등의 요소를 일관성 있게 관리하기 위해 학습 파이프라인을 Trainer 클래스로 구성하였다.
+
+```python
+trainer = Trainer(
+  TinyVGG_A,
+  train_transform=fix_scale_transform(s=36),
+  test_transforms=[
+    fix_scale_transform(s=36),
+    fix_scale_transform(s=40)
+  ]
+)
+
+trainer.train(epoch=10) # Train for the first 10 epochs
+trainer.train(epoch=5) # Continue training for 5 more epochs
+
+trainer.evaluate() # Evaluate the model on the validation set
+```
+
 ## Results
+TinyVGG 구조 A부터 E까지에 대해 다양한 학습 이미지 스케일 설정을 실험한 결과,
+전반적으로 구조가 깊어질수록 성능은 향상되었지만 학습 전략에 따라 그 효과가 달라지는 양상을 보였다.
+
+$S=36$에서 학습한 경우, 가장 단순한 구조인 A는 `0.783`의 정확도를 기록했으며, B는 그보다 약간 높은 `0.798`의 정확도를 달성하였다
+구조가 더 복잡한 C, D, E는 오히려 낮은 성능을 보였는데, 이는 모델 구조에 비해 데이터의 다양성이 복잡했기 때문으로 해석된다.
+
+Multi-Scale 학습($[36, 44]$)을 적용한 경우, D와 E에서 각각 `0.785`, `0.732`로 정확도가 상승하는 모습을 보였다.
+특히 D는 실험 전체에서 가장 높은 정확도를 기록했다.
+이는 다양한 해상도의 이미지를 활용한 학습이 일반화 성능 향상에 효과적임을 보여준다.
+
+단순히 구조를 깊게 하는 것보다는 학습 데이터에 적절한 다양성을 제공하는 것이 더 효과적인 성능 향상 방법일수도 있다.
+
 <div align="center">
   <table border="1" cellspacing="0" cellpadding="5">
     <caption><b>Table.2 - TinyVGG performance at multiple scales</b></caption>
@@ -192,3 +266,33 @@ ImageNet에서 CIFAR-10으로 데이터셋이 변경되며 입력 이미지의 �
     </tbody>
   </table>
 </div>
+
+## What I learned
+데이터 증강 기법(Augmentation)이 모델 성능에 큰 영향을 미친다는 사실을 실험을 통해 체감할 수 있었다.
+논문에서 제시된 증강 기법을 재현하기 위해 PyTorch의 다양한 `transforms` 함수를 찾아보고 직접 테스트해보며 사용법을 익혔다.
+
+모델 학습이 완료된 이후에도 다양한 평가 기법이 존재함을 새롭게 알게 되었다.
+논문에서는 주로 Dense Evaluation 방식을 통해 모델을 평가하지만
+본 실험에서는 CIFAR-10의 작은 이미지 크기 특성상 해당 기법을 그대로 적용하기 어려웠다.
+다만 이후의 다른 실습에서는 Dense Evaluation을 직접 구현해보고 싶다.
+
+이러한 다양한 증강 및 평가 기법을 실험에 적용하기 위해
+여러 `transform`을 동시에 적용할 수 있는 `MultiTransformDataset`과
+수평 반전된 이미지 쌍을 함께 처리할 수 있는 `PairedFlipDataset` 등 커스텀 `Dataset`도 직접 구현해보았다.
+이 과정 역시 실험 재현과 정확한 평가에 있어 중요한 역할을 했다.
+
+## Reflections
+논문에 제시된 실험 과정을 가능한 한 충실히 재현하는 것을 이번 실험의 주요 목표로 삼았다.
+모델을 직접 구현해본 경험은 있었지만, 실험을 계획하고 실행하며 결과를 분석해본 경험은 이번이 처음이었다.
+그 과정을 통해 실험과 결과 해석이 하나의 주장을 뒷받침하는 데 얼마나 중요한 역할을 하는지를 실제로 체감할 수 있었다.
+
+특히 실험 결과를 해석하고 정리하는 과정이 가장 어려웠다.
+다음에는 분석 기준을 미리 설정하고 결과를 보다 체계적으로 정리하는 방법을 시도해보고자 한다.
+
+또한 훈련 로그를 확인하며 추가 학습 여부를 판단하는 과정이 꽤 번거롭게 느껴졌다.
+실험을 효율화하기 위해 다양한 시도를 해보았지만 훈련 반복 횟수(epoch)를 결정하는 기준에 대해서는 깊이 있게 고민하지 못했다.
+앞으로는 훈련 종료 조건이나 반복 횟수를 더 합리적으로 설정하는 방법을 학습하고,
+실험을 더욱 편리하게 수행할 수 있도록 전체 파이프라인을 리팩터링하는 것도 시도해보고 싶다.
+
+## References
+- [Very Deep Convolutional Networks for Large-Scale Image Recognition](https://arxiv.org/abs/1409.1556)
