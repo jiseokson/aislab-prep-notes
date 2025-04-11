@@ -12,6 +12,85 @@ ImageNet에서 CIFAR-10으로 데이터셋이 변경되며 입력 이미지의 �
 이는 CIFAR-10과 ImageNet 간의 이미지 해상도 비율이 1/7(=32/224)와 유사하다.
 본 실험에서는 이러한 분석을 바탕으로 논문에 제시된 VGG 구조에서 Convolution 레이어의 채널 수를 1/8로 축소한 모델을 이용했다.
 
+<div align="center">
+  <table border="1" cellspacing="0" cellpadding="5" style="text-align:center;">
+    <caption><b>Table.1 - TinyVGG configuration</b></caption>
+    <thead>
+      <tr>
+        <th>A</th>
+        <th>B</th>
+        <th>C</th>
+        <th>D</th>
+        <th>E</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>conv3-8</td>
+        <td>conv3-8<br>conv3-8</td>
+        <td>conv3-8<br>conv3-8</td>
+        <td>conv3-8<br>conv3-8</td>
+        <td>conv3-8<br>conv3-8</td>
+      </tr>
+      <tr>
+        <td colspan="5">maxpool2</td>
+      </tr>
+      <tr>
+        <td>conv3-16</td>
+        <td>conv3-16<br>conv3-16</td>
+        <td>conv3-16<br>conv3-16</td>
+        <td>conv3-16<br>conv3-16</td>
+        <td>conv3-16<br>conv3-16</td>
+      </tr>
+      <tr>
+        <td colspan="5">maxpool2</td>
+      </tr>
+      <tr>
+        <td>conv3-32<br>conv3-32</td>
+        <td>conv3-32<br>conv3-32</td>
+        <td>conv3-32<br>conv3-32<br>conv1-32</td>
+        <td>conv3-32<br>conv3-32<br>conv3-32</td>
+        <td>conv3-32<br>conv3-32<br>conv3-32<br>conv3-32</td>
+      </tr>
+      <tr>
+        <td colspan="5">maxpool2</td>
+      </tr>
+      <tr>
+        <td>conv3-64<br>conv3-64</td>
+        <td>conv3-64<br>conv3-64</td>
+        <td>conv3-64<br>conv3-64<br>conv1-64</td>
+        <td>conv3-64<br>conv3-64<br>conv3-64</td>
+        <td>conv3-64<br>conv3-64<br>conv3-64<br>conv3-64</td>
+      </tr>
+      <tr>
+        <td colspan="5">maxpool2</td>
+      </tr>
+      <tr>
+        <td>conv3-64<br>conv3-64</td>
+        <td>conv3-64<br>conv3-64</td>
+        <td>conv3-64<br>conv3-64<br>conv1-64</td>
+        <td>conv3-64<br>conv3-64<br>conv3-64</td>
+        <td>conv3-64<br>conv3-64<br>conv3-64<br>conv3-64</td>
+      </tr>
+      <tr>
+        <td colspan="5">maxpool2</td>
+      </tr>
+      <tr>
+        <td colspan="5">FC-64</td>
+      </tr>
+      <tr>
+        <td colspan="5">FC-64</td>
+      </tr>
+      <tr>
+        <td colspan="5">FC-10</td>
+      </tr>
+      <tr>
+        <td colspan="5">soft-max</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
 ## Training
 훈련 데이터셋은 논문에 제시된 방식에 최대한 맞춰 다음과 같은 전처리를 적용했다.
 
@@ -39,26 +118,77 @@ ImageNet에서 CIFAR-10으로 데이터셋이 변경되며 입력 이미지의 �
 
 ## Results
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/07631516-a397-43f2-8ff8-756a3d15a6c3" width="70%">
-  <p>Fig.1 - TinyVGG A, Fix-Scale(s=36) Training Log</p>
-</div>
-
-<div align="center">
-  <img src="https://github.com/user-attachments/assets/192c35d1-01f0-4f7f-bab6-c202b1355df6" width="70%">
-  <p>Fig.2 - TinyVGG B, Fix-Scale(s=36) Training Log</p>
-</div>
-
-<div align="center">
-  <img src="https://github.com/user-attachments/assets/587bd06b-5836-4dbe-8f65-6f633596b03c" width="70%">
-  <p>Fig.3 - TinyVGG C, Fix-Scale(s=36) Training Log</p>
-</div>
-
-<div align="center">
-  <img src="https://github.com/user-attachments/assets/8c585d13-1221-4d2e-baa5-dd03c14b195d" width="70%">
-  <p>Fig.4 - TinyVGG D, Multi-Scale(s=[36, 44]) Training Log</p>
-</div>
-
-<div align="center">
-  <img src="https://github.com/user-attachments/assets/35580787-8ace-4d78-8cad-7edda5c4c3b5" width="70%">
-  <p>Fig.5 - TinyVGG E, Multi-Scale(s=[36, 44]) Training Log</p>
+  <table border="1" cellspacing="0" cellpadding="5">
+    <caption><b>Table.2 - TinyVGG performance at multiple scales</b></caption>
+    <thead>
+      <tr>
+        <th rowspan="2">TinyVGG config</th>
+        <th>Train Size (S)</th>
+        <th>Test Size (Q)</th>
+        <th>Accuracy</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td rowspan="1">A</td>
+        <td>36</td>
+        <td>36</td>
+        <td>0.783</td>
+      </tr>
+      <tr>
+        <td rowspan="1">B</td>
+        <td>36</td>
+        <td>36</td>
+        <td>0.798</td>
+      </tr>
+      <tr>
+        <td rowspan="3">C</td>
+        <td>36</td>
+        <td>36</td>
+        <td>0.771</td>
+      </tr>
+      <tr>
+        <td>40</td>
+        <td>40</td>
+        <td>0.756</td>
+      </tr>
+      <tr>
+        <td>[36, 44]</td>
+        <td>40</td>
+        <td>0.753</td>
+      </tr>
+      <tr>
+        <td rowspan="3">D</td>
+        <td>36</td>
+        <td>36</td>
+        <td>0.774</td>
+      </tr>
+      <tr>
+        <td>40</td>
+        <td>40</td>
+        <td>0.761</td>
+      </tr>
+      <tr>
+        <td>[36, 44]</td>
+        <td>40</td>
+        <td>0.785</td>
+      </tr>
+      <tr>
+        <td rowspan="3">E</td>
+        <td>36</td>
+        <td>36</td>
+        <td>0.679</td>
+      </tr>
+      <tr>
+        <td>40</td>
+        <td>40</td>
+        <td>0.729</td>
+      </tr>
+      <tr>
+        <td>[36, 44]</td>
+        <td>40</td>
+        <td>0.732</td>
+      </tr>
+    </tbody>
+  </table>
 </div>
