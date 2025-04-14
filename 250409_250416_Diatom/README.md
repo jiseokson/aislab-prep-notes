@@ -4,7 +4,17 @@
   <p>Fig.1 - Diatom Benchmark Dataset의 Random samples</p>
 </div>
 
-Diatom Benchmark Dataset의 기본적인 특성을 조사했다.
+[Diatom Benchmark Dataset](https://www.kaggle.com/datasets/huseyingunduz/diatom-dataset)의 기본적인 특성과 분포를 조사했다.
+
+규조류(Diatoms)는 바다, 민물, 습한 토양 및 다양한 표면에서 발견되는 조류(algae)의 일종으로,
+자연에서 가장 흔하게 발견되는 식물성 플랑크톤(phytoplankton) 중 하나이다.
+현재까지 200개 이상의 속(genera)과 약 20만 종(species)이 존재하는 것으로 알려져 있다.
+규조류는 지구 전체 산소의 약 20~25%를 생산할 정도로 중요한 생물군이다.
+\[Source: [Kaggle, Diatom Dataset](https://www.kaggle.com/datasets/huseyingunduz/diatom-dataset)\]
+
+해당 데이터셋은 2,197장의 컬러 이미지로 이루어져 있으며,
+68종의 규조류(diatom)에 해당하는 총 3,027개의 객체가 어노테이션 되어있다.
+모든 이미지의 해상도는 2112×1584 픽셀이다.
 
 ## Class Distribution Analysis
 데이터의 불균형이 매우 심하다. 상위 2~3개의 클래스(Gomphonema olivaceum, Navicula cryptotenella 등)가 샘플의 대다수를 차지하고 있다.
