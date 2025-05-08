@@ -44,7 +44,7 @@ def get_fasterrcnn_model(num_classes):
   return model
 ```
 
-### get_retinanet_model(num_classes)
+### `get_retinanet_model(num_classes)`
 
 Pre-trained 된 RetinaNet 모델을 로드한다
 
