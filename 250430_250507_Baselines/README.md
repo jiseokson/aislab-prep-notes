@@ -1,5 +1,14 @@
 ## Overview
 
+Diatom Dataset에 대해 대표적인 Object Detection 모델들을 적용하여 성능 베이스라인을 확보하는 것을 목표로 한다.
+주요 실험 모델로는 Faster R-CNN과 RetinaNet이 사용되었으며 각각에 대해 head만 학습하는 방식, 전체 fine-tuning, 그리고 다중 learning rate 적용 등 다양한 설정을 적용해 비교하였다.
+
+- 데이터: 68종의 규조류(Diatom)가 포함된 2,197장의 이미지
+
+- 평가 지표: `mAP@[.5:.95]`, `mAP@50`, `mAP@75`
+
+- 목적: 이후 모델 개선/최적화 실험의 기준선(Baseline) 확보
+
 ## Code Overview
 
 ### `Trainer`
@@ -22,7 +31,7 @@
 ```
 
 ### `get_fasterrcnn_model(num_classes)`
-Pre-trained 된 Faster-RCNN 모델을 로드한다.
+Pre-trained 된 Faster R-CNN 모델을 로드한다
 
 ```python
 def get_fasterrcnn_model(num_classes):
@@ -36,6 +45,8 @@ def get_fasterrcnn_model(num_classes):
 ```
 
 ### get_retinanet_model(num_classes)
+
+Pre-trained 된 RetinaNet 모델을 로드한다
 
 ```python
 def get_retinanet_model(num_classes):
