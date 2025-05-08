@@ -87,4 +87,14 @@ def get_retinanet_model(num_classes):
 
 ## What I Learned
 
+PyTorch 기반 Object Detection 모델의 기본적인 사용법을 익혔다.
+모델의 모드(train(), eval())에 따라 forward 함수의 출력이 달라진다는 점을 이해했고, 각 출력값의 의미를 파악하여 학습 및 평가 루프 구현에 직접 적용해보았다.
+
+또한, Object Detection에서 널리 사용되는 평가 지표인 mAP(mean Average Precision)의 개념을 학습하였다.
+특히 IoU(Intersection over Union) 기준에 따라 다양한 세부 지표(`mAP@[.5:.95]`, `mAP@50`, `mAP@75` 등)로 나뉘며 각 지표가 가지는 의미와 활용 목적에 대해서도 이해할 수 있었다.
+
+교수님의 리뷰를 바탕으로 학습 로그 그래프를 분석하며 모델의 학습 상태를 점검해보았다.
+이를 통해 성능 변화의 원인을 파악하고 이후 실험 방향에 대해서도 일부 계획을 수립할 수 있었다.
+
 ## Reflections
+교수님의 리뷰 결과 현재 학습 로그를 기준으로는 모델이 아직 충분히 수렴하지 않은 것으로 보인다. 이에 따라 동일한 설정으로 학습을 추가 진행할 예정이다.
