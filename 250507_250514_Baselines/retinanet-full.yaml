@@ -1,0 +1,4 @@
+model: retinanet
+mode: full
+
+learning_rate: 0.005

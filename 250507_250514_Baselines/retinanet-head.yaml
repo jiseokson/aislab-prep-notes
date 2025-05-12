@@ -1,0 +1,4 @@
+model: retinanet
+mode: head
+
+learning_rate: 0.005
