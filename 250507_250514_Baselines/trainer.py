@@ -67,8 +67,8 @@ class Trainer:
 
   @staticmethod
   def from_checkpoint(model, optimizer, train_dataloader, val_dataloader, root_dir, device):
-    if not os.path.isdir(root_dir):
-      raise NotADirectoryError(f"{root_dir} is not a valid directory.")
+    os.makedirs(root_dir, exist_ok=True)
+    
     if not os.path.isfile(os.path.join(root_dir, "checkpoints.json")):
       raise FileNotFoundError(f"No checkpoints.json found in {root_dir}")
 

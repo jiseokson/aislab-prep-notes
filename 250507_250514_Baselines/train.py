@@ -19,7 +19,7 @@ def main():
   parser = argparse.ArgumentParser(description="Training configuration for object detection")
 
   parser.add_argument(
-      "--checkpoint", type=str, required=True, choices=["fasterrcnn", "retinanet"],
+      "--checkpoint", type=str, required=False, default=None,
       help="Directory to save model checkpoints"
   )
 
@@ -58,31 +58,31 @@ def main():
   train_dataset, val_dataset = get_diatom_dataset(root_dir=diatom_dataset_root_dir)
   train_dataloader, val_dataloader = get_diatom_dataloader(train_dataset, val_dataset, args.batch, args.worker, args.prefetch)
 
-  if config.model == "fasterrcnn":
+  if config["model"] == "fasterrcnn":
     model = get_fasterrcnn_model(len(classes) + 1)
-  elif config.model == "retinanet":
+  elif config["model"] == "retinanet":
     model = get_retinanet_model(len(classes) + 1)
 
   model.to(device)
 
-  if config.mode == "full":
+  if config["mode"] == "full":
     optimizer = torch.optim.SGD(
       [p for p in model.parameters() if p.requires_grad],
-      lr=config.learning_rate,
+      lr=config["learning_rate"],
       momentum=0.9,
     )
 
-  elif config.mode == "head":
+  elif config["mode"] == "head":
     for param in model.backbone.parameters():
       param.requires_grad = False
 
     optimizer = torch.optim.SGD(
       [p for p in model.parameters() if p.requires_grad],
-      lr=config.learning_rate,
+      lr=config["learning_rate"],
       momentum=0.9,
     )
 
-  elif config.mode == "split":
+  elif config["mode"] == "split":
     backbone_params = []
     head_params = []
 
@@ -96,11 +96,17 @@ def main():
 
     optimizer = torch.optim.SGD(
       [
-        {"params": backbone_params, "lr": config.back_lr},
-        {"params": head_params, "lr": config.head_lr},
+        {"params": backbone_params, "lr": config["back_lr"]},
+        {"params": head_params, "lr": config["head_lr"]},
       ],
       momentum=0.9
     )
+
+  group_name = f"{config['mode']}-b{config['back_lr']:.0e}-h{config['head_lr']:.0e}" \
+    if config["mode"] == "split" else config["mode"]
+  
+  if args.checkpoint is None:
+    args.checkpoint = f"{config['model']}-{group_name}"
 
   try:
     trainer = Trainer.from_checkpoint(
@@ -127,11 +133,8 @@ def main():
       device
     )
 
-  group_name = f"{config.mode}-b{config.backbone_lr:.0e}-h{config.head_lr:.0e}" \
-    if config.mode == "split" else config.mode
-
   wandb.init(
-    project=config.model,
+    project=config["model"],
     group=group_name,
     config=config,
   )
