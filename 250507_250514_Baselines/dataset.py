@@ -196,24 +196,26 @@ def get_diatom_dataset(root_dir):
 
   return train_dataset, val_dataset
 
-def get_diatom_dataloader(train_dataset, val_dataset):
+def get_diatom_dataloader(train_dataset, val_dataset, batch_size, num_workers, prefetch_factor):
   train_dataloader = DataLoader(
     dataset=train_dataset,
-    batch_size=2,
+    batch_size=batch_size,
     shuffle=True,
-    num_workers=1,
+    num_workers=num_workers,
     pin_memory=True,
-    prefetch_factor=2,
+    prefetch_factor=prefetch_factor,
+    persistent_workers = True if num_workers > 0 else False,
     collate_fn=lambda batch: tuple(zip(*batch))
   )
 
   val_dataloader = DataLoader(
     dataset=val_dataset,
-    batch_size=2,
-    shuffle=False,
-    num_workers=1,
+    batch_size=batch_size,
+    shuffle=True,
+    num_workers=num_workers,
     pin_memory=True,
-    prefetch_factor=2,
+    prefetch_factor=prefetch_factor,
+    persistent_workers = True if num_workers > 0 else False,
     collate_fn=lambda batch: tuple(zip(*batch))
   )
 

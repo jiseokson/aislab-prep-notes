@@ -65,6 +65,32 @@ class Trainer:
 
     self.checkpoints = {}
 
+  @staticmethod
+  def from_checkpoint(model, optimizer, train_dataloader, val_dataloader, root_dir, device):
+    if not os.path.isdir(root_dir):
+      raise NotADirectoryError(f"{root_dir} is not a valid directory.")
+    if not os.path.isfile(os.path.join(root_dir, "checkpoints.json")):
+      raise FileNotFoundError(f"No checkpoints.json found in {root_dir}")
+
+    with open(os.path.join(root_dir, "checkpoints.json"), "r") as f:
+      checkpoints = {int(k): v for k, v in json.load(f).items()}
+
+    checkpoint_path = checkpoints[max(checkpoints.keys())]
+    checkpoint = torch.load(checkpoint_path, map_location=device)
+
+    model.load_state_dict(checkpoint["model_state_dict"])
+    optimizer.load_state_dict(checkpoint["optimizer_state_dict"])
+
+    trainer = Trainer(model, optimizer, train_dataloader, val_dataloader, root_dir, device)
+
+    trainer.complete_epoch = checkpoint["epoch"]
+    trainer.train_losses = checkpoint["train_losses"]
+    trainer.scores = checkpoint["scores"]
+
+    trainer.checkpoints = checkpoints
+
+    return trainer
+
   def train(self, epochs):
     start_epoch = self.complete_epoch + 1
 
@@ -76,6 +102,8 @@ class Trainer:
       self.scores.append(score)
 
       self.complete_epoch = epoch
+
+      self.checkout()
 
       wandb.log({
         "epoch": epoch,
@@ -91,8 +119,6 @@ class Trainer:
         f"Val mAP@50: {score['map_50'].item():.3f} | "
         f"Val mAP@75: {score['map_75'].item():.3f}"
       )
-
-    self.checkout()
 
   def checkout(self):
     os.makedirs(self.root_dir, exist_ok=True)
