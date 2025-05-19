@@ -123,8 +123,7 @@ class Trainer:
   def checkout(self):
     os.makedirs(self.root_dir, exist_ok=True)
 
-    random_id = uuid.uuid4().hex[:8]
-    output_path = os.path.join(self.root_dir, f"{random_id}-epoch{self.complete_epoch}.pt")
+    output_path = os.path.join(self.root_dir, f"epoch{self.complete_epoch}.pt")
 
     torch.save(
       {
