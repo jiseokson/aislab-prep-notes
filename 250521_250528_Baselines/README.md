@@ -103,3 +103,15 @@ Prediction: [6]
 Ground Truth: [34, 27]
 Prediction: [27, 34, 8, 2, 41, 34, 13, 36, 34, 39]
 ```
+
+## Conclusion
+
+예측 결과를 직접 시각화함으로써, 모델이 따르는 일반적인 분류 패턴을 확인할 수 있었다.
+현재 사용 중인 데이터셋의 클래스 이름은 규조류(Diatom)의 ‘속(Genus)’과 ‘종(Species)’으로 구성되어 있다.
+
+#12(Encyonema ventricosum) 클래스의 14개 샘플 중 4개가 #4(Encyonema silesiacum)으로 잘못 분류된 사례를 보면, 두 클래스 모두 ‘Encyonema’라는 동일한 속(Genus)에 속해 있어 혼동이 발생했음을 알 수 있다.
+
+또한 형태가 유사한 경우 학습 데이터에서 샘플 수가 더 많은 클래스로 분류되는 경향이 있다. 실제로 #17(Diatoma mesodon)의 6개 샘플 중 4개가 #6(Planothidium lanceolatum)으로 인식된 사례에서 이러한 경향이 확인되었다.
+
+RetinaNet에서 두드러진 관찰 결과는 박스의 위치는 비교적 정확하게 예측하지만 너무 많은 객체를 탐지하여 NMS(Non-Maximum Suppression)로도 충분히 걸러지지 않는 경우가 많았다는 점이다.
+이로 인해 실제보다 과도하게 많은 객체가 검출되는 문제가 자주 발생했다.
