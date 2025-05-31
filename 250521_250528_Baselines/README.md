@@ -36,16 +36,38 @@ Faster R-CNN은 Full Fine-tuning의 `epoch=20`, RetinaNet은 Full Fine-tuning의
 
 ## Faster R-CNN Error cases
 
-### #9(Rhoicosphenia abbreviata)가 전체 16개 중 6개를 배경으로 인식
+### #9(Rhoicosphenia abbreviata) 전체 16개 중 6개를 배경으로 인식
 
 <p align="center">
  <img src="https://github.com/user-attachments/assets/3f728bbc-03ac-4557-8ad7-4c5fbe5080db" width="45%"/>
  <img src="https://github.com/user-attachments/assets/3c65abc6-64fd-446c-880d-a2020d0242d2" width="45%"/>
 </p>
 
+```
+Ground Truth: [9]
+Prediction: []
+```
+
 <p align="center">
  <img src="https://github.com/user-attachments/assets/3e9d9c1c-9940-4081-baae-bd1c926eb01f" width="45%"/>
  <img src="https://github.com/user-attachments/assets/b46edaf3-7b44-4485-b0df-cb3699dce622" width="45%"/>
 </p>
+
+```
+Ground Truth: [9]
+Prediction: [3, 44, 41, 5, 8, 46]
+```
+
+### #12(Encyonema ventricosum) 전체 14개 중 4개를 #4(Encyonema silesiacum)로 인식
+
+<p align="center">
+ <img src="https://github.com/user-attachments/assets/be776398-3d53-4799-8b69-ac2d94722d87" width="45%"/>
+ <img src="https://github.com/user-attachments/assets/dfc6d2c9-095f-4847-b05c-07d31daf6481" width="45%"/>
+</p>
+
+```
+Ground Truth: [12]
+Prediction: [12, 4]
+```
 
 ## RetinaNet Error cases
