@@ -36,7 +36,7 @@ Faster R-CNN은 Full Fine-tuning의 `epoch=20`, RetinaNet은 Full Fine-tuning의
 
 ## Faster R-CNN Error cases
 
-### #9(Rhoicosphenia abbreviata) 전체 16개 중 6개를 배경으로 인식
+### #9(Rhoicosphenia abbreviata) 전체 16개 중 배경으로 6개를 인식
 
 <p align="center">
  <img src="https://github.com/user-attachments/assets/3f728bbc-03ac-4557-8ad7-4c5fbe5080db" width="45%"/>
@@ -58,7 +58,7 @@ Ground Truth: [9]
 Prediction: [3, 44, 41, 5, 8, 46]
 ```
 
-### #12(Encyonema ventricosum) 전체 14개 중 4개를 #4(Encyonema silesiacum)로 인식
+### #12(Encyonema ventricosum) 전체 14개 중 #4(Encyonema silesiacum)로 4개 인식
 
 <p align="center">
  <img src="https://github.com/user-attachments/assets/be776398-3d53-4799-8b69-ac2d94722d87" width="45%"/>
@@ -70,4 +70,36 @@ Ground Truth: [12]
 Prediction: [12, 4]
 ```
 
+### #17(Diatoma mesodon) 전체 6개 중 배경으로 7개, #6(Planothidium lanceolatum)로 4개를 인식
+
+<p align="center">
+ <img src="https://github.com/user-attachments/assets/3ef6bd44-44b3-4b30-8ce3-fdd0316ee34a" width="45%"/>
+ <img src="https://github.com/user-attachments/assets/1deb2c9b-8451-4e01-a0d2-258572fcc5ec" width="45%"/>
+</p>
+
+```
+Ground Truth: [17, 6]
+Prediction: [6]
+```
+
+<p align="center">
+ <img src="https://github.com/user-attachments/assets/9c697561-4788-4612-989f-5a69ae2e021f" width="45%"/>
+ <img src="https://github.com/user-attachments/assets/dc088bd8-db81-405c-ae33-bedc4fb43246" width="45%"/>
+</p>
+
+```
+Ground Truth: [17]
+Prediction: [6]
+```
+
 ## RetinaNet Error cases
+
+<p align="center">
+ <img src="https://github.com/user-attachments/assets/8c11e872-2452-428d-9227-700299e58d06" width="45%"/>
+ <img src="https://github.com/user-attachments/assets/b5c0d64b-124c-4726-8d50-8f07a655b492" width="45%"/>
+</p>
+
+```
+Ground Truth: [34, 27]
+Prediction: [27, 34, 8, 2, 41, 34, 13, 36, 34, 39]
+```
