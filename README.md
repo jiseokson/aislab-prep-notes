@@ -1,3 +1,18 @@
+# 📑 Contents
+
+- [CIFAR10 (250401 - 250409)](#cifar10) \
+  CIFAR-10 데이터셋을 대상으로 VGG 기반 모델을 설계하고 정확도 80% 이상을 달성한 실험 기록
+- [TinyVGG (250401 - 250409)](#tinyvgg) \
+  VGG 논문 구조를 CIFAR-10 환경에 맞게 경량화하여 재현하고, 다양한 구조와 스케일 설정에 따른 성능 비교
+- [Diatom (250409 - 250416)](#diatom) \
+  규조류 객체 검출 데이터셋의 클래스 분포, 박스 크기, 위치 특성 등 통계적 분석 및 시각화 수행
+- [Baseline 1 (250423 - 250507)](#baseline-1) \
+  Faster R-CNN과 RetinaNet 모델을 다양한 학습 설정으로 실험하여 Diatom 데이터셋의 베이스라인 성능 확보
+- [Baseline 2 (250507 - 250514)](#baseline-2) \
+  학습 파이프라인을 `.py` 단위로 재구성하고 W&B 로깅 및 체크포인트 기능을 포함한 효율적인 실험 환경 구축
+- [Confusion Matrix (250514 - 250528)](#confusion-matrix) \
+  학습된 모델의 분류 오류를 Confusion matrix와 예측 결과 시각화를 통해 분석하고 패턴과 한계를 도출
+
 # [CIFAR10](https://github.com/jiseokson/aislab-prep-notes/tree/main/250401_250409_CIFAR10)
 
 ## Overview
